@@ -8,14 +8,32 @@ def post_comment():
     db.session.commit()
     return jsonify(["Comment added successfully"])
 
+# def get_comments():
+#     comments = Comment.query.all()
+#     comments_dict = [comment.to_dict() for comment in comments ]
+#     return jsonify(comments_dict)
+
 def get_comments():
-    comments = Comment.query.all()
-    comments_dict = [comment.to_dict() for comment in comments ]
-    return jsonify(comments_dict)
+    comments_list=[]
+    for comment in Comment.query.all():
+        comment_dict={
+               "id":comment.id, 
+               "comment":comment.comment, 
+               "user_id":comment.user_id,
+                "content_id":comment.content_id                
+                }
+        comments_list.append(comment_dict)
+    return jsonify(comments_list)
 
 def get_comment(id):
-    comment = Comment.query.filter_by(id=id).first().to_dict()
-    return jsonify(comment)
+    comment = Comment.query.filter_by(id=id).first()
+    comment_dict={
+               "id":comment.id, 
+               "comment":comment.comment, 
+               "user_id":comment.user_id,
+                "content_id":comment.content_id                
+                }
+    return jsonify(comment_dict)
 
 def update_comment(id):
     comment = Comment.query.filter_by(id=id).first()

@@ -12,13 +12,26 @@ def post_category():
     
 #Getting all categories
 def get_categories():
-    categories = Category.query.all()
-    categories_dict = [category.to_dict() for category in categories] 
-    return jsonify(categories_dict)
+    categories=[]
+    for category in Category.query.all():
+        category_dict={
+               "id":category.id,               
+                "name":category.name
+                          
+                }
+        categories.append(category_dict)
+    return jsonify(categories)
+    
+    
 
 def get_category(id):
     category = Category.query.get(id)
-    return jsonify(category.to_dict())
+    category_dict={
+               "id":category.id,               
+                "name":category.name
+                          
+                }
+    return jsonify(category_dict)
 
 def update_category(id):
     category = Category.query.get(id)

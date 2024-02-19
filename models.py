@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import UniqueConstraint
 from sqlalchemy_serializer import SerializerMixin
 
 from datetime import datetime
@@ -7,7 +8,7 @@ db = SQLAlchemy()
 
 
 
-class User(db.Model):
+class User(db.Model,SerializerMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key = True)
     firstname = db.Column(db.String(50))
@@ -16,15 +17,13 @@ class User(db.Model):
     password = db.Column(db.String(50))
     role = db.Column(db.String(50))
 
-    def serialize(self):
-        return {
-            
-            "firstname": self.firstname,
-            "lastname": self.lastname,
-            "email": self.email,
-            "password": self.password,
-            "role": self.role
-        }
+    comments = db.relationship("Comment" ,backref = 'user',lazy = True)
+    contents = db.relationship("Content",back_populates='users',lazy = True)
+    wishlist = db.relationship("Wishlist", backref='user',uselist = False)
+    profile = db.relationship("Profile", backref = "user",uselist=False)
+    subscriptions = db.relationship("Subscription",backref = "user",lazy = True)
+    recommendations = db.relationship("Recommendation", backref='user',lazy=True)
+ 
     
 
 class Content(db.Model,SerializerMixin):
@@ -43,11 +42,21 @@ class Content(db.Model,SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
+    comments = db.relationship('Comment',backref = 'content',lazy=True)
+    users = db.relationship("User",back_populates = 'contents',lazy=True )
+
+    recommendations = db.relationship('Recommendation', backref = 'content')
+
+
+
+
 
 class Category(db.Model, SerializerMixin):
     __tablename__ = 'categories'
     id =  db.Column(db.Integer, primary_key = True) 
     name = db.Column(db.String(50), unique = True)
+
+    contents = db.relationship("Content", backref = 'category', lazy=True)
 
     
 class Profile(db.Model,SerializerMixin):
@@ -55,8 +64,10 @@ class Profile(db.Model,SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     profile_picture = db.Column(db.String)
     bio = db.Column(db.String(200))
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'),unique = True)
+    __table_args__ = (
+        UniqueConstraint('user_id'),
+    )
 
 class Comment(db.Model,SerializerMixin):
     __tablename__ = 'comments'
@@ -65,17 +76,22 @@ class Comment(db.Model,SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     content_id = db.Column(db.Integer,db.ForeignKey('contents.id'))
 
+    
+
 class Wishlist(db.Model,SerializerMixin):
     __tablename__ = 'wishlists'
     id = db.Column(db.Integer, primary_key = True)
     content_id = db.Column(db.Integer,db.ForeignKey('contents.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    contents = db.relationship('Content',backref= 'wishlist',lazy = True)
 
 class Subscription(db.Model,SerializerMixin):
     __tablename__ = 'subscriptions'
     id = db.Column(db.Integer, primary_key = True)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+
+    categories = db.relationship("Category",backref = 'subscription',lazy =True)
     
 class Recommendation(db.Model,SerializerMixin):
     __tablename__ = 'recommendations'

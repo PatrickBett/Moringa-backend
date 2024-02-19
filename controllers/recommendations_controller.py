@@ -9,13 +9,26 @@ def post_recommendation():
     return jsonify(["Recommendation added successfully"])
 
 def get_recommendations():
-    recommendations = Recommendation.query.all()
-    recommendations_dict = [recommendation.to_dict() for recommendation in recommendations ]
-    return jsonify(recommendations_dict)
+    recommendations=[]
+    for recommendation in Recommendation.query.all():
+        recommendation_dict={
+               "id":recommendation.id,               
+                "user_id":recommendation.user_id,
+                "content_id":recommendation.content_id
+                          
+                }
+        recommendations.append(recommendation_dict)
+    return jsonify(recommendations)
 
 def get_recommendation(id):
-    recommendation = Recommendation.query.filter_by(id=id).first().to_dict()
-    return jsonify(recommendation)
+    recommendation = Recommendation.query.filter_by(id=id).first()
+    recommendation_dict={
+               "id":recommendation.id,               
+                "user_id":recommendation.user_id,
+                "content_id":recommendation.content_id
+                          
+                }
+    return jsonify(recommendation_dict)
 
 def update_recommendation(id):
     recommendation = Recommendation.query.filter_by(id=id).first()

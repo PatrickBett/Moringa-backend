@@ -9,13 +9,26 @@ def post_wishlist():
     return jsonify(["Wishlist added successfully"])
 
 def get_wishlists():
-    wishlists = Wishlist.query.all()
-    wishlists_dict = [wishlist.to_dict() for wishlist in wishlists ]
-    return jsonify(wishlists_dict)
+    wishlists=[]
+    for wishlist in Wishlist.query.all():
+        wishlist_dict={
+               "id":wishlist.id,               
+                "user_id":wishlist.user_id,
+                "content_id":wishlist.content_id
+                          
+                }
+        wishlists.append(wishlist_dict)
+    return jsonify(wishlists)
 
 def get_wishlist(id):
-    wishlist = Wishlist.query.filter_by(id=id).first().to_dict()
-    return jsonify(wishlist)
+    wishlist = Wishlist.query.filter_by(id=id).first()
+    wishlist_dict={
+               "id":wishlist.id,               
+                "user_id":wishlist.user_id,
+                "content_id":wishlist.content_id
+                          
+                }
+    return jsonify(wishlist_dict)
 
 def update_wishlist(id):
     wishlist = Wishlist.query.filter_by(id=id).first()

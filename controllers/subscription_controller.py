@@ -9,13 +9,26 @@ def post_subscription():
     return jsonify(["Subscription added successfully"])
 
 def get_subscriptions():
-    subscriptions = Subscription.query.all()
-    subscriptions_dict = [subscription.to_dict() for subscription in subscriptions ]
-    return jsonify(subscriptions_dict)
+    subscriptions=[]
+    for subscription in Subscription.query.all():
+        subscription_dict={
+               "id":subscription.id,               
+                "user_id":subscription.user_id,
+                "category_id":subscription.category_id
+                          
+                }
+        subscriptions.append(subscription_dict)
+    return jsonify(subscriptions)
 
 def get_subscription(id):
-    subscription = Subscription.query.filter_by(id=id).first().to_dict()
-    return jsonify(subscription)
+    subscription = Subscription.query.filter_by(id=id).first()
+    subscription_dict={
+               "id":subscription.id,               
+                "user_id":subscription.user_id,
+                "category_id":subscription.category_id
+                          
+                }
+    return jsonify(subscription_dict)
 
 def update_subscription(id):
     subscription = Subscription.query.filter_by(id=id).first()

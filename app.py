@@ -74,7 +74,7 @@ def getprofiles():
     return get_profiles()
 
 
-@app.route('/profile', methods = ['GET'])
+@app.route('/profile/<int:id>', methods = ['GET'])
 def getprofile(id):
     return get_profile(id)
 
@@ -88,108 +88,108 @@ def deleteprofile(id):
 
 
 #Content
-@app.route('/content',methods = ['POST'])
+@app.route('/contents',methods = ['POST'])
 def postcontent():
     return post_content()
 
-@app.route('/content',methods = ['GET'])
+@app.route('/contents',methods = ['GET'])
 def getcontents():
     return get_contents()
 
-@app.route('/content/<int:id>',methods = ['GET'])
+@app.route('/contents/<int:id>',methods = ['GET'])
 def getcontent(id):
     return get_content(id)
 
-@app.route('/content/<int:id>',methods = ['PUT'])
+@app.route('/contents/<int:id>',methods = ['PUT'])
 def updatecontent(id):
     return update_content(id)
 
-@app.route('/content/<int:id>',methods = ['DELETE'])
+@app.route('/contents/<int:id>',methods = ['DELETE'])
 def deletecontent(id):
     return delete_content(id)
 
 
 # Comment
-@app.route('/comment',methods = ['POST'])
+@app.route('/comments',methods = ['POST'])
 def postcomment():
     return post_comment()
 
-@app.route('/comment',methods = ['GET'])
+@app.route('/comments',methods = ['GET'])
 def getcomments():
     return get_comments()
 
-@app.route('/comment/<int:id>',methods = ['GET'])
+@app.route('/comments/<int:id>',methods = ['GET'])
 def getcomment(id):
     return get_comment(id)
 
-@app.route('/comment/<int:id>',methods = ['PUT'])
+@app.route('/comments/<int:id>',methods = ['PUT'])
 def updatecomment(id):
     return update_comment(id)
 
-@app.route('/comment/<int:id>',methods = ['DELETE'])
+@app.route('/comments/<int:id>',methods = ['DELETE'])
 def deletecomment(id):
     return delete_comment(id)
 
 #Wishlist
-@app.route('/wishlist',methods = ['POST'])
+@app.route('/wishlists',methods = ['POST'])
 def postwishlist():
     return post_wishlist()
 
-@app.route('/wishlist',methods = ['GET'])
+@app.route('/wishlists',methods = ['GET'])
 def getwishlists():
     return get_wishlists()
 
-@app.route('/wishlist/<int:id>',methods = ['GET'])
+@app.route('/wishlists/<int:id>',methods = ['GET'])
 def getwishlist(id):
     return get_wishlist(id)
 
-@app.route('/wishlist/<int:id>',methods = ['PUT'])
+@app.route('/wishlists/<int:id>',methods = ['PUT'])
 def updatewishlist(id):
     return update_wishlist(id)
 
-@app.route('/wishlist/<int:id>',methods = ['DELETE'])
+@app.route('/wishlists/<int:id>',methods = ['DELETE'])
 def deletewishlist(id):
     return delete_wishlist(id)
 
 #Subscriptions
-@app.route('/subscription',methods = ['POST'])
+@app.route('/subscriptions',methods = ['POST'])
 def postsubscription():
     return post_subscription()
 
-@app.route('/subscription',methods = ['GET'])
+@app.route('/subscriptions',methods = ['GET'])
 def getsubscriptions():
     return get_subscriptions()
 
-@app.route('/subscription/<int:id>',methods = ['GET'])
+@app.route('/subscriptions/<int:id>',methods = ['GET'])
 def getsubscription(id):
     return get_subscription(id)
 
-@app.route('/subscription/<int:id>',methods = ['PUT'])
+@app.route('/subscriptions/<int:id>',methods = ['PUT'])
 def updatesubscription(id):
     return update_subscription(id)
 
-@app.route('/subscription/<int:id>',methods = ['DELETE'])
+@app.route('/subscriptions/<int:id>',methods = ['DELETE'])
 def deletesubscription(id):
     return delete_subscription(id)
 
 # Recommendations
-@app.route('/recommendation',methods = ['POST'])
+@app.route('/recommendations',methods = ['POST'])
 def postrecommendation():
     return post_recommendation()
 
-@app.route('/recommendation',methods = ['GET'])
+@app.route('/recommendations',methods = ['GET'])
 def getrecommendations():
     return get_recommendations()
 
-@app.route('/recommendation/<int:id>',methods = ['GET'])
+@app.route('/recommendations/<int:id>',methods = ['GET'])
 def getrecommendation(id):
     return get_recommendation(id)
 
-@app.route('/recommendation/<int:id>',methods = ['PUT'])
+@app.route('/recommendations/<int:id>',methods = ['PUT'])
 def updaterecommendation(id):
     return update_recommendation(id)
 
-@app.route('/recommendation/<int:id>',methods = ['DELETE'])
+@app.route('/recommendations/<int:id>',methods = ['DELETE'])
 def deleterecommendation(id):
     return delete_recommendation(id)
 

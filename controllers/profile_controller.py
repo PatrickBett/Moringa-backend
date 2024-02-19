@@ -4,19 +4,32 @@ from models import Profile,db
 def post_profile():
     data = request.get_json()
 
-    profile = Profile(id =data['id'],profile_picture = data['profile_picture'],bio = data['bio'],user_id=data['user_id'])
+    profile = Profile(profile_picture = data['profile_picture'],bio = data['bio'],user_id=data['user_id'])
     db.session.add(profile)
     db.session.commit()
     return jsonify(["Profile Added successfully"])
 
-def get_profiles():
-    profiles = Profile.query.all()
-    profiles_dict = [profile.to_dict() for profile in profiles]
-    return jsonify(profiles_dict)
+def get_profiles():    
+    profiles_list=[]
+    for profile in Profile.query.all():
+        profile_dict = {
+            "id":profile.id,
+            "profile_picture":profile.profile_picture,
+            "bio":profile.bio,
+            "user_id":profile.user_id
+        }
+        profiles_list.append(profile_dict)
+    return jsonify(profiles_list)
 
 def get_profile(id):
     profile = Profile.query.get(id)
-    return jsonify(profile.to_dict())
+    profile_dict = {
+            "id":profile.id,
+            "profile_picture":profile.profile_picture,
+            "bio":profile.bio,
+            "user_id":profile.user_id
+        }
+    return jsonify(profile_dict)
     
 
 def update_profile(id):
